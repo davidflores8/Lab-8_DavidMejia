@@ -21,6 +21,8 @@ void asignaciones(char**&,int);
 int columna(char);
 int fila (char);
 Pieza* pp(int);
+void movimiento(char**&,Pieza*,int,int,int,int);
+
 
 
 int main(){
@@ -70,7 +72,7 @@ int main(){
 
 }
 
-void movimiento(char**& matriz, Pieza* pieza, int fm ,int cm){
+void movimiento(char**& matriz, Pieza* pieza, int fm ,int cm, int fs, int cs){
         if(typeid(Torre)== typeid(*pieza)){
                 
         }
@@ -94,7 +96,7 @@ Pieza* pp(int a){
                 }
                 break;
                 case 4:{
-                        pieza=new Alfil()
+                        pieza=new Alfil();
                 }
                 break;
                 case 5:{
@@ -184,32 +186,27 @@ int fila(char n){
         return retorno;
 }
 
-void asignaciones(char**& matriz, int a, Pieza* pieza){
+void asignaciones(char**& matriz, int a){
         char ac=' ';
         switch(a){
                 case 1:{
                         ac='T';
-                        pieza=new Torre();
                 }
                 break;
                 case 2:{
                         ac='Q';
-                        pieza=new Reina();
                 }
                 break;
                 case 3:{
                         ac='P';
-                        pieza=Peon();
                 }
                 break;
                 case 4:{
                         ac='A';
-                        pieza=Alfil()
                 }
                 break;
-                case 5:{
+                case 5:{ 
                         ac='C';
-                        pieza=Caballo();
                 }
                 break;
         }
