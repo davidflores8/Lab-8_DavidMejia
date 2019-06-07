@@ -6,7 +6,7 @@ Alfil::Alfil(){
 }
 
 
-bool Alfil::validarMovimiento(int fila, int columna, char**& matriz){
+bool Alfil::validarMovimiento(int fs, int cs, int fm, int cm, char**& matriz){
     return true;
 
 }

@@ -4,7 +4,7 @@ Rey::Rey(){
     nombre='R';
 }
 
-bool Rey::validarMovimiento(int fila, int columna, char**& matriz){
+bool Rey::validarMovimiento(int fs, int cs, int fm, int cm, char**& matriz){
     return true;
 
 }

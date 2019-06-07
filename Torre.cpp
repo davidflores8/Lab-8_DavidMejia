@@ -6,7 +6,8 @@ Torre::Torre(){
 }
 
 
-bool Torre::validarMovimiento(int fila, int columna, char**& matriz){
+bool Torre::validarMovimiento(int fs, int cs, int fm, int cm, char**& matriz){
+
     return true;
 
 }

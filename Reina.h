@@ -6,6 +6,6 @@
 class Reina: public Pieza{
     public:
         Reina();
-        bool validarMovimiento(int, int, char**&);
+        bool validarMovimiento(int, int, int, int, char**&);
 };
 #endif

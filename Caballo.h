@@ -6,6 +6,6 @@
 class Caballo: public Pieza{
     public:
         Caballo();
-        bool validarMovimiento(int, int, char**&);
+        bool validarMovimiento(int, int, int, int,char**&);
 };
 #endif

@@ -6,6 +6,6 @@
 class Torre:public Pieza{
     public:
         Torre();
-        bool validarMovimiento(int, int, char**&);
+        bool validarMovimiento(int, int, int, int, char**&);
 };
 #endif

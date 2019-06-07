@@ -5,13 +5,12 @@
 
 
 class Pieza{
-
-    public:
+  public:
         char nombre;
         Pieza();
         Pieza(char);
 
-        virtual bool validarMovimiento(int, int, char**&)=0;
+        virtual bool validarMovimiento(int, int, int, int, char**&);
 
 
 };

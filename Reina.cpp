@@ -6,7 +6,7 @@ Reina::Reina(){
 }
 
 
-bool Reina::validarMovimiento(int fila, int columna, char**& matriz){
+bool Reina::validarMovimiento(int fs, int cs, int fm, int cm, char**& matriz){
     return true;
 
 }

@@ -6,7 +6,7 @@ Caballo::Caballo(){
 }
 
 
-bool Caballo::validarMovimiento(int fila, int columna, char**& matriz){
+bool Caballo::validarMovimiento(int fs, int cs, int fm, int cm, char**& matriz){
     return true;
 
 }
