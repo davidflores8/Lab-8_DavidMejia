@@ -1,6 +1,7 @@
 #include "Pieza.h"
 #include <iostream>
 
+
 Pieza::Pieza(){
 
 }

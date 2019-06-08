@@ -8,6 +8,10 @@
 #include "Peon.h"
 #include "Alfil.h"
 #include <typeinfo>
+#include <vector>
+#include "Partida.h"
+#include <fstream>
+using std::vector;
 using std::cin;
 using std::cout;
 using std::endl;
@@ -21,8 +25,7 @@ void asignaciones(char**&,int);
 int columna(char);
 int fila (char);
 Pieza* pp(int);
-void movimiento(char**&,Pieza*,int,int,int,int);
-
+bool movimiento(char**&,Pieza*,int,int,int,int);
 
 
 int main(){
@@ -32,6 +35,8 @@ int main(){
         matriz=llenarMatriz(matriz,8);
         int rep=2;
         Pieza* pieza;
+        Partida* partida;
+        //partida=new Partida();
         while(rep!=3){
                 cout<<"1. Iniciar partida "<<endl;
                 cout<<"2. Recrear partida"<<endl;
@@ -41,24 +46,62 @@ int main(){
                         case 1: {
                                 int a;
                                 char ac;
+                               // partida->crearPartida();
                                 cout<<"Jugador, ingrese el acompanante de su rey\n1.Torre\n2.Reina\n3.Peon\n4.Alfil\n5.Caballo"<<endl; 
                                 cin>>a;
                                 pieza=pp(a);
+                                //partida->tipoPieza(pieza);
                                 asignaciones(matriz,a);
                                 printMatriz(matriz, 8);
                                 bool flag=true;
+                                int r=0;
                                 while(flag){
                                         string c1;
                                         int fs,cs,fm,cm;
                                         cout<<"Jugador blanco, ingrese la pieza que quiere mover y hacia adonde: "<<endl;
                                         cin>>c1;
-                                        fs=fila(c1[1]);
-                                        cs=columna(c1[2]);
-                                        fm=fila(c1[4]);
-                                        cm=columna(c1[5]);
-
-
-
+                                        cs=fila(c1[1]);
+                                        fs=columna(c1[2]);
+                                        cm=fila(c1[4]);
+                                        fm=columna(c1[5]);
+                                        cout<<"donde estoy "<<fs<<" -- "<<cs<< "  donde voy "<<fm<<" -- "<<cm<<endl;
+                                        while (movimiento(matriz, pieza, fm, cm, fs, cs)==false){
+                                                cout<<"Ingrese nuevamente las coordenadas: "<<endl;
+                                                cin>>c1;
+                                                cs=fila(c1[1]);
+                                                fs=columna(c1[2]);
+                                                cm=fila(c1[4]);
+                                                fm=columna(c1[5]);
+                                        }
+                                      //  partida->guardarPartida(c1);
+                                        printMatriz(matriz, 8);
+                                        cout<< " "<<endl;
+                                        cout<<"Jugador negro, ingrese la pieza que quiere mover y hacia adonde: "<<endl;
+                                        cin>>c1;
+                                        cs=fila(c1[1]);
+                                        fs=columna(c1[2]);
+                                        cm=fila(c1[4]);
+                                        fm=columna(c1[5]);
+                                        while (movimiento(matriz, pieza, fm, cm, fs, cs)==false){
+                                                cout<<"Ingrese nuevamente las coordenadas: "<<endl;
+                                                cin>>c1;
+                                                cs=fila(c1[1]);
+                                                fs=columna(c1[2]);
+                                                cm=fila(c1[4]);
+                                                fm=columna(c1[5]);
+                                        }
+                                        //partida->guardarPartida(c1);
+                                        printMatriz(matriz, 8);
+                                        cout<<"Desea seguir jugando? 1.Si 2.No"<<endl;
+                                        cin>>r;
+                                        if (r==1){
+                                                flag=true;
+                                        }
+                                        else{
+                                                flag=false;
+                                               // partida->crearPartida();
+                                        
+                                        }
 
 
                                 }
@@ -72,11 +115,28 @@ int main(){
 
 }
 
-void movimiento(char**& matriz, Pieza* pieza, int fm ,int cm, int fs, int cs){
+bool movimiento(char**& matriz, Pieza* pieza, int fm ,int cm, int fs, int cs){
+        bool t=false;
+        bool retorno;
         if(typeid(Torre)== typeid(*pieza)){
-                
+                t=pieza->validarMovimiento(fs,cs,fm,cm,matriz);
+                if (t){
+                        retorno=true;
+                }                
         }
-
+        else if (typeid(Peon) == typeid(*pieza)){
+                t=pieza->validarMovimiento(fs,cs,fm,cm,matriz);
+                if(t){
+                        retorno=true;
+                }
+        }
+        else if(typeid (Alfil)== typeid(*pieza)){
+                t=pieza->validarMovimiento(fs,cs,fm,cm,matriz);
+                if(t){
+                        retorno=true;
+                }
+        }
+        return t;
 }
 
 Pieza* pp(int a){
@@ -84,23 +144,28 @@ Pieza* pp(int a){
         switch(a){
                 case 1:{
                         pieza=new Torre();
+                        cout<<"torre"<<endl;
                 }
                 break;
                 case 2:{
 
                         pieza=new Reina();
+                        cout<<"reina"<<endl;
                 }
                 break;
                 case 3:{
                         pieza=new Peon();
+                        cout<<"peon"<<endl;
                 }
                 break;
                 case 4:{
                         pieza=new Alfil();
+                        cout<<"alfil"<<endl;
                 }
                 break;
                 case 5:{
                         pieza=new Caballo();
+                        cout<<"caballo"<<endl;
                 }
                 break;
         }
@@ -112,35 +177,35 @@ int columna(char n){
         int retorno;
         switch(n){
                 case '1':{
-                        retorno=0;
+                        retorno=7;
                 } 
                 break;
                 case '2':{
-                        retorno=1;
-                } 
-                break;
-                case '3':{
-                        retorno=2;
-                } 
-                break;
-                case '4':{
-                        retorno=3;
-                } 
-                break;
-                case '5':{
-                        retorno=4;
-                } 
-                break;
-                case '6':{
-                        retorno=5;
-                } 
-                break;
-                case '7':{
                         retorno=6;
                 } 
                 break;
+                case '3':{
+                        retorno=5;
+                } 
+                break;
+                case '4':{
+                        retorno=4;
+                } 
+                break;
+                case '5':{
+                        retorno=3;
+                } 
+                break;
+                case '6':{
+                        retorno=2;
+                } 
+                break;
+                case '7':{
+                        retorno=1;
+                } 
+                break;
                 case '8':{
-                        retorno=7;
+                        retorno=0;
                 } 
                 break;
         }
