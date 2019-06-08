@@ -1,0 +1,3 @@
+0 - Partida 
+Alfil
+[c1,d2] , 

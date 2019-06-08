@@ -16,7 +16,6 @@ using std::cin;
 using std::cout;
 using std::endl;
 using std::string;
-
 void liberarMatriz(char**, int);
 char** crearMatriz(int);
 void printMatriz(char**, int);
@@ -31,12 +30,13 @@ bool movimiento(char**&,Pieza*,int,int,int,int);
 int main(){
 
         char** matriz=NULL;
+        int cont=0;
         matriz=crearMatriz(8);
         matriz=llenarMatriz(matriz,8);
+        vector<string>movimientos;
         int rep=2;
         Pieza* pieza;
-        Partida* partida;
-        //partida=new Partida();
+        Partida* partidas;
         while(rep!=3){
                 cout<<"1. Iniciar partida "<<endl;
                 cout<<"2. Recrear partida"<<endl;
@@ -46,11 +46,12 @@ int main(){
                         case 1: {
                                 int a;
                                 char ac;
-                               // partida->crearPartida();
+                                partidas->crearPartida(cont);
+                                cont++;
                                 cout<<"Jugador, ingrese el acompanante de su rey\n1.Torre\n2.Reina\n3.Peon\n4.Alfil\n5.Caballo"<<endl; 
                                 cin>>a;
                                 pieza=pp(a);
-                                //partida->tipoPieza(pieza);
+                                partidas->tipoPieza(pieza);
                                 asignaciones(matriz,a);
                                 printMatriz(matriz, 8);
                                 bool flag=true;
@@ -64,7 +65,6 @@ int main(){
                                         fs=columna(c1[2]);
                                         cm=fila(c1[4]);
                                         fm=columna(c1[5]);
-                                        cout<<"donde estoy "<<fs<<" -- "<<cs<< "  donde voy "<<fm<<" -- "<<cm<<endl;
                                         while (movimiento(matriz, pieza, fm, cm, fs, cs)==false){
                                                 cout<<"Ingrese nuevamente las coordenadas: "<<endl;
                                                 cin>>c1;
@@ -73,7 +73,7 @@ int main(){
                                                 cm=fila(c1[4]);
                                                 fm=columna(c1[5]);
                                         }
-                                      //  partida->guardarPartida(c1);
+                                        partidas->guardarPartida(c1);
                                         printMatriz(matriz, 8);
                                         cout<< " "<<endl;
                                         cout<<"Jugador negro, ingrese la pieza que quiere mover y hacia adonde: "<<endl;
@@ -90,7 +90,7 @@ int main(){
                                                 cm=fila(c1[4]);
                                                 fm=columna(c1[5]);
                                         }
-                                        //partida->guardarPartida(c1);
+                                        partidas->guardarPartida(c1);
                                         printMatriz(matriz, 8);
                                         cout<<"Desea seguir jugando? 1.Si 2.No"<<endl;
                                         cin>>r;
@@ -99,12 +99,21 @@ int main(){
                                         }
                                         else{
                                                 flag=false;
-                                               // partida->crearPartida();
+                                               partidas->cerrarPartida();
                                         
                                         }
 
 
                                 }
+
+                        }
+                        break;
+                        case 2:{
+                                char juego;
+                                int juego_a;
+                                cout<<"Abra el fichero bitacora.txt y elija la partida que quiere cargar: "<<endl;
+                                cin>>juego;
+                                
 
                         }
                 }
@@ -115,9 +124,15 @@ int main(){
 
 }
 
+void extraerMovimientos(vector<string>& movimientos){
+        
+}
+
 bool movimiento(char**& matriz, Pieza* pieza, int fm ,int cm, int fs, int cs){
         bool t=false;
         bool retorno;
+       // cout<<fs<< " --- "<<cs<<"   "<<endl;
+       // cout<<fm<< " --- "<<cm<<"   "<<endl;
         if(typeid(Torre)== typeid(*pieza)){
                 t=pieza->validarMovimiento(fs,cs,fm,cm,matriz);
                 if (t){
@@ -134,6 +149,16 @@ bool movimiento(char**& matriz, Pieza* pieza, int fm ,int cm, int fs, int cs){
                 t=pieza->validarMovimiento(fs,cs,fm,cm,matriz);
                 if(t){
                         retorno=true;
+                }
+        }
+        //      otro
+        if (matriz[fs][cs]=='R'){
+                Pieza* rey=new Rey();
+         //       cout<<"hola"<<endl;
+                t=rey->validarMovimiento(fs,cs,fm,cm,matriz);
+                if (t){
+                        retorno=true;
+                        delete rey;
                 }
         }
         return t;
@@ -294,13 +319,13 @@ void asignaciones(char**& matriz, int a){
                 }
                 break;
                 case 'Q':{
-                        matriz[0][4]='T';
-                        matriz[7][3]='T';
+                        matriz[0][3]='Q';
+                        matriz[7][3]='Q';
                 }
                 break;
                 case 'P':{
-                        matriz[6][4]='T';
-                        matriz[1][4]='T';
+                        matriz[6][4]='P';
+                        matriz[1][4]='P';
                 }
                 break;
         }
